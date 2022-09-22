@@ -13,11 +13,11 @@ import org.rmj.appdriver.Tokenize;
  */
 public class testEncrypt {
     public static void main(String [] args){
-        String lsValue = Tokenize.EncryptAuthToken("M00114000092", "09178214933", "1", "1");
+        String lsValue = Tokenize.EncryptAuthToken("M00116002211", "09175243089", "1", "1");
         System.out.println(lsValue);
         
         
-        if ("34443935443441424246423230363231334536454534393739313537453131363841423745353030334445343839363038434335444135303945444245364646".equals(lsValue)){
+        if ("33453434393631353036393533384643444241444535303334453432374633423146444638374239354338333337314436344237354343423532443245323836".equals(lsValue)){
             System.out.println("tama");
         } else{
             System.out.println("mali");

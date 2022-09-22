@@ -865,8 +865,11 @@ public class XMCodeApproval {
         
         switch (fnResult){
             case 1:
-                lsMessage = "GUANZON GROUP: CI approval code for Mr/Ms. " + poData.getMiscInfo() + 
-                            " with application date of " + reqstdxx + " is " + apprvlcd + " issued by " + employnm;
+                lsMessage = apprvlcd + " is the CI approval code for Mr/Ms " + poData.getMiscInfo() + 
+                            " issued by " + employnm + ".\nGuanzon Group";
+                
+//                lsMessage = "GUANZON GROUP: CI approval code for Mr/Ms. " + poData.getMiscInfo() + 
+//                            " with application date of " + reqstdxx + " is " + apprvlcd + " issued by " + employnm;
                 
                 if (!branchno.equals("")){
                     lsSQL = "INSERT INTO HotLine_Outgoing SET" +
