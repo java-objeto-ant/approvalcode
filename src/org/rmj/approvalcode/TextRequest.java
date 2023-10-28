@@ -145,8 +145,7 @@ public class TextRequest {
                             " WHERE sTransNox = " + SQLUtil.toSQL(loRS.getString("sTransNox"));
                     
                     poGRider.executeUpdate(lsSQL);
-                }
-                    
+                }     
             }
         } catch (SQLException ex) {
             logwrapr.severe(ex.getMessage());
