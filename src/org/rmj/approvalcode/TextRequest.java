@@ -17,6 +17,15 @@ public class TextRequest {
         String lsProdctID = "IntegSys";
         String lsUserIDxx = "M001111122";
 
+        String path;
+        if(System.getProperty("os.name").toLowerCase().contains("win")){
+            path = "D:/GGC_Java_Systems";
+        }
+        else{
+            path = "/srv/mac/GGC_Java_Systems";
+        }
+        System.setProperty("sys.default.path.config", path);
+        
         GRider poGRider = new GRider(lsProdctID);
 
         if (!poGRider.loadUser(lsProdctID, lsUserIDxx)){

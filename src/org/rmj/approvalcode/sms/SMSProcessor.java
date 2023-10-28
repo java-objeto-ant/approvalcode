@@ -13,6 +13,15 @@ public class SMSProcessor {
         String lsProdctID = "IntegSys";
         String lsUserIDxx = "M001111122";
 
+        String path;
+        if(System.getProperty("os.name").toLowerCase().contains("win")){
+            path = "D:/GGC_Java_Systems";
+        }
+        else{
+            path = "/srv/mac/GGC_Java_Systems";
+        }
+        System.setProperty("sys.default.path.config", path);
+        
         GRider poGRider = new GRider(lsProdctID);
 
         if (!poGRider.loadUser(lsProdctID, lsUserIDxx)){
@@ -26,8 +35,12 @@ public class SMSProcessor {
                             ", sMessagex" +
                             ", sMobileNo" +
                         " FROM SMS_Incoming" +
-                        " WHERE UCASE(sMessagex) LIKE 'APP_RQST%'" +
+                        " WHERE (LEFT(sMessagex, 8) LIKE 'APP_RQST'" +
+                                " OR LEFT(sMessagex, 4) = 'HDEC')" +
                             " AND (cTranStat IS NULL OR cTranStat = '0')";
+        
+//        UCASE(sMessagex) LIKE 'APP_RQST%'
+        
         ResultSet loRS = poGRider.executeQuery(lsSQL);
         
         try {
@@ -39,6 +52,7 @@ public class SMSProcessor {
                 
                 poGRider.beginTrans();
                 instance = SMSApprovalFactory.make(poGRider, loRS.getString("sMessagex").replace("", "_"), loRS.getString("sMobileNo"));
+                
                 if (instance.ProcessApproval()){
                     logwrapr.info(instance.getMessage());
                     

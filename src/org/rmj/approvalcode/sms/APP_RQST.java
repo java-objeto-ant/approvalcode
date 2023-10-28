@@ -1,14 +1,24 @@
 package org.rmj.approvalcode.sms;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import org.engr.purchasing.pojo.UnitPOMaster;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.rmj.appdriver.GRider;
+import org.rmj.appdriver.MiscUtil;
 import org.rmj.appdriver.SQLUtil;
 import org.rmj.appdriver.Tokenize;
 import org.rmj.appdriver.agentfx.CommonUtils;
+import org.rmj.appdriver.agentfx.WebClient;
+import org.rmj.appdriver.agentfx.service.PO_Master;
+import org.rmj.engr.purchasing.base.PurchaseOrder;
 
 /**
  *
@@ -16,6 +26,8 @@ import org.rmj.appdriver.agentfx.CommonUtils;
  *      2020.12.08  Started creating this object.
  */
 public class APP_RQST implements iApproval{
+    private final String TOPMGMNT = "M00119002175"; //1 - bos jo; 2 - bos onel; 3 - bos guan; ;M00119002653;M00120001290
+    
     GRider poGRider;
     String psSender;
     String psSMS;
@@ -73,7 +85,8 @@ public class APP_RQST implements iApproval{
         
         //get the request code
         String [] lasRequest = lasSMS[0].split(" ");
-        if (!isValidRequest(lasRequest[1])) return false;
+        String lsRequest = lasRequest[1];
+        if (!isValidRequest(lsRequest)) return false;
         
         //get and validate auth token vs the records passed
         String lsAuthTokn = getAuthToken(lasRequest[1]);
@@ -108,7 +121,30 @@ public class APP_RQST implements iApproval{
             return false;
         }
         
+        //update casys_dbf
+        lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
+                    "  cApprType = '1'" + 
+                    ", sAuthTokn = " + SQLUtil.toSQL(lsAuthTokn) + 
+                    ", sApprCode = " + SQLUtil.toSQL(lsAppvlCde) + 
+                    ", dApproved = " + SQLUtil.toSQL(poGRider.getServerDate()) + 
+                    ", cTranStat = '1'" +
+                " WHERE sTransNox = " + SQLUtil.toSQL((String) loJSON.get("sTransNox"));
+        if (poGRider.executeUpdate(lsSQL) <= 0){
+            psMessage = poGRider.getErrMsg() + "; " + poGRider.getMessage();
+            return false;
+        }
+
+        if (TOPMGMNT.contains((String) loJSON.get("sReqstdTo"))){
+            String lsMessage = "Thank you for approving Engineering Purchase Order with transaction number " + (String) loJSON.get("sSourceNo") + ".";
+            
+            sendSMS((String) loJSON.get("sSourceNo"), lsMessage, (String) loJSON.get("sMobileNo"));
+        }
+        
         psMessage = "Token approval request was approved successfully.";
+        
+        if (lsRequest.equalsIgnoreCase("ep"))
+            if (autoApproveEP((String) loJSON.get("sSourceNo"), lsAuthTokn, (String) loJSON.get("sReqstdTo"))) psMessage += " Transaction was totally approved.";
+        
         return true;
     }
     
@@ -121,12 +157,7 @@ public class APP_RQST implements iApproval{
     public String getMessage() {
         return psMessage;
     }
-    
-    //added methods
-    private boolean createSMS(){
-        return true;
-    }
-    
+        
     private boolean isValidRequest(String fsRqstCode){        
         String lsSQL = "SELECT * FROM xxxSCA_Request WHERE cRecdStat = '1' AND sSCACodex = " + SQLUtil.toSQL(fsRqstCode);
         
@@ -243,24 +274,150 @@ public class APP_RQST implements iApproval{
         
         return true;
     }
-    
-    /*
-    private boolean isValidApprovee(String fsEmployID, String fsMobileNo){
-        //compare field value for employee id vs the employee id from auth token
-        if (!fsEmployID.equals(psEmployID)){
-            psErrCode = ApprvlErrorCode.AUTH_ERROR;
-            psMessage = "Discrepancy on request's AUTHORIZED EMPLOYEE NO. and the SENDER EMPLOYEE NO. detected.";
-            return false;
+
+    private boolean autoApproveEP(String fsTransNox, String fsAuthTokn, String fsEmployID){
+        String lsProdctID = "General";
+        String lsUserIDxx = "M001111122";
+
+        GRider loGRider = new GRider(lsProdctID);
+
+        if (!loGRider.loadUser(lsProdctID, lsUserIDxx)) return false;
+        
+        String lsEngrNmbr = CommonUtils.getConfiguration(poGRider, "EngrNmbr");
+        
+        PO_Master instance = new PO_Master();
+        instance.setGRider(loGRider);
+        instance.setTransNmbr(fsTransNox);
+        
+        //get required approval weight to approve the transaction
+        int lnReqWeight = instance.getWeight2Apprv();
+        
+        if (lnReqWeight < 0) return false;
+        
+        //get the approved requests
+        JSONArray arr = instance.loadCodeRequest();
+        
+        JSONObject loJSON;
+        
+        int lnCount = 0;
+        String lsAuthTokn;
+        String lasAuthTokn [];
+        
+        //get the weight of the current approval
+        lsAuthTokn = Tokenize.DecryptToken(fsAuthTokn, fsEmployID);
+        lasAuthTokn = lsAuthTokn.split(":");
+        lnCount += Integer.parseInt(lasAuthTokn[3]);
+        
+        for (Object obj : arr){
+            loJSON = (JSONObject) obj;
+            
+            if ("1".equals((String) loJSON.get("cTranStat"))){
+                lsAuthTokn = Tokenize.DecryptToken((String) loJSON.get("sAuthTokn"), (String) loJSON.get("sEmployID"));
+                lasAuthTokn = lsAuthTokn.split(":");
+                lnCount += Integer.parseInt(lasAuthTokn[3]);
+            }
         }
         
-        //compare if the sender number is same as the registered number on auth token
-        if (!fsMobileNo.equals(psSender)){
-            psErrCode = ApprvlErrorCode.AUTH_ERROR;
-            psMessage = "Discrepancy on request's AUTHORIZED NO. and the SENDER NO. detected.";
-            return false;
+        if (lnCount >= lnReqWeight){
+            PurchaseOrder loPO = new PurchaseOrder();
+            loPO.setGRider(loGRider);
+            loPO.setWithParent(true);
+            
+            if (loPO.closeTransaction(fsTransNox, lsUserIDxx, "TOKENAPPROVL")) {
+                UnitPOMaster loUnit = loPO.loadTransaction(fsTransNox);
+                
+                if (!loUnit.getReferNo().isEmpty())
+                    psSMS = "Your PO with refer # " + loUnit.getReferNo() + " was successfully approved. You can now print the transaction.";
+                else
+                    psSMS = "Your PO with trans # " + fsTransNox + " was successfully approved. You can now print the transaction.";
+                
+                sendSMS(fsTransNox, lsEngrNmbr, psSMS);
+            }
         }
+        
+        return false;
+    }
+    
+    private boolean sendSMS(String fsTransNox, String fsMessage, String fsMobileNo){
+        boolean sent = sendSMS(fsMobileNo, fsMessage);
+        
+        String lsSQL = MiscUtil.getNextCode("HotLine_Outgoing", "sTransNox", true, poGRider.getConnection(), "MX01");
+                
+        lsSQL = "INSERT INTO HotLine_Outgoing SET" +
+                "  sTransNox = " + SQLUtil.toSQL(lsSQL) +
+                ", dTransact = " + SQLUtil.toSQL(poGRider.getServerDate()) +
+                ", sDivision = 'MIS'" +
+                ", sMobileNo = " + SQLUtil.toSQL(fsMobileNo) +
+                ", sMessagex = " + SQLUtil.toSQL(psSMS) +
+                ", cSubscrbr = " + SQLUtil.toSQL(CommonUtils.classifyNetwork(fsMobileNo)) +
+                ", dDueUntil = " + SQLUtil.toSQL(poGRider.getServerDate()) +
+                ", cSendStat = '2'" +
+                ", nNoRetryx = '1'" +
+                ", sUDHeader = ''" +
+                ", sReferNox = " + SQLUtil.toSQL(fsTransNox) +
+                ", sSourceCd = " + SQLUtil.toSQL("APTK") +
+                ", cTranStat = " + SQLUtil.toSQL(sent ? "1" : "0") +
+                ", nPriority = 1" +
+                ", sModified = " + SQLUtil.toSQL(poGRider.getUserID()) +
+                ", dModified = " + SQLUtil.toSQL(poGRider.getServerDate());
+
+        poGRider.executeUpdate(lsSQL);
         
         return true;
     }
-    */
+    
+    private boolean sendSMS(String fsMobileNo, String fsMessagex){
+        System.out.println("Sending SMS to " + fsMobileNo);
+        
+        String fsURL = "https://restgk.guanzongroup.com.ph/system/masking/sendSMS.php";
+        
+        String clientid = poGRider.getClientID(); //this must be replaced based on the client id using it
+        String productid = poGRider.getProductID(); //this must be replaced based on the product id using it
+        String imei = "GMC_SEG09"; //this must be replaced based on the computer name using it
+        String userid = poGRider.getUserID(); //this must be replaced based on the user id using it
+        
+        Calendar calendar = Calendar.getInstance();
+        Map<String, String> headers = new HashMap<String, String>();
+        headers.put("Accept", "application/json");
+        headers.put("Content-Type", "application/json");
+        headers.put("g-api-id", productid);
+        headers.put("g-api-imei", imei);
+        
+        headers.put("g-api-key", SQLUtil.dateFormat(calendar.getTime(), "yyyyMMddHHmmss"));        
+        headers.put("g-api-hash", org.apache.commons.codec.digest.DigestUtils.md5Hex((String)headers.get("g-api-imei") + (String)headers.get("g-api-key")));
+        headers.put("g-api-client", clientid);    
+        headers.put("g-api-user", userid);    
+        headers.put("g-api-log", "");    
+        headers.put("g-api-token", "");    
+        headers.put("g-api-mobile", "");    
+        
+        JSONObject param = new JSONObject();
+        param.put("message", fsMessagex);
+        param.put("mobileno", fsMobileNo);
+        param.put("maskname", "GUANZON");
+        
+        String response;
+        try {
+            response = WebClient.sendHTTP(fsURL, param.toJSONString(), (HashMap<String, String>) headers);
+            if(response == null){
+                System.out.println("No Response");
+                return false;
+            } 
+
+            JSONParser loParser = new JSONParser();
+            JSONObject loJSON = (JSONObject) loParser.parse(response);
+            
+            if (loJSON.get("result").equals("success")){
+                System.out.println((String) loJSON.get("message") + "(" + (String) loJSON.get("maskname") + " - " + (String) loJSON.get("id") + ")");
+                return true;
+            } else {
+                loJSON = (JSONObject) loJSON.get("error");
+                System.err.println(String.valueOf(loJSON.get("code")) + " - " + (String) loJSON.get("message"));
+                return false;
+            }
+        } catch (IOException | ParseException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

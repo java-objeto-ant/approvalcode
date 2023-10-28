@@ -7,10 +7,26 @@
             <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java%20new/approvalcode/src/org/rmj/approvalcode/sms/APP_RQST.java</file>
             <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java%20new/approvalcode/src/org/rmj/approvalcode/sms/SMSApprovalFactory.java</file>
         </group>
-        <group name="GCard"/>
         <group name="POS"/>
         <group name="Engineering Inventory Management System"/>
-        <group name="GCARD"/>
+        <group name="android dependencies"/>
+        <group name="kumander">
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/sms/SMSProcessor.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/SendNotification.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/sms/APP_RQST.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/NotificationFactory.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/PO_EP.java</file>
+        </group>
+        <group name="GCard"/>
+        <group name="integsys-engr"/>
+        <group name="guanzon"/>
+        <group name="LOCAL"/>
+        <group name="approvalcode">
+            <file>file:/D:/GuanzonL/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/SendNotification.java</file>
+        </group>
         <group/>
+        <group name="Engineering"/>
+        <group name="Utillities"/>
+        <group name="GCARD"/>
     </open-files>
 </project-private>
