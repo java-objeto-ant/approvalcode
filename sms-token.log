@@ -1072,3 +1072,201 @@ Feb 22, 2023 1:21:36 PM org.rmj.replication.utility.LogWrapper info
 INFO: Thank you.
 Jul 26, 2023 1:15:55 PM org.rmj.replication.utility.LogWrapper info
 INFO: Start of Process.
+Jan 18, 2024 11:40:22 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001011	09177013632	APP_RQST EP/GK01/GK0124000037;2024-01-16;7180.0;Tires | Rstd By Maam Leslie Espanol | Norther Automax/By:Karen De Vera
+Jan 18, 2024 11:40:23 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Duplicate entry 'M0012401600414-M001111122' for key 'PRIMARY'; 
+Jan 18, 2024 11:40:41 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001011	09177013632	APP_RQST EP/GK01/GK0124000037;2024-01-16;7180.0;Tires | Rstd By Maam Leslie Espanol | Norther Automax/By:Karen De Vera
+Jan 18, 2024 11:41:28 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001011	09177013632	APP_RQST EP/GK01/GK0124000037;2024-01-16;7180.0;Tires | Rstd By Maam Leslie Espanol | Norther Automax/By:Karen De Vera
+Jan 18, 2024 11:41:31 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:32 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001012	09175693332	APP_RQST EP/GK01/GK0124000037;2024-01-16;7180.0;Tires | Rstd By Maam Leslie Espanol | Norther Automax/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:41:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:36 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001028	09178214933	APP_RQST EP/M001/M00124000133;2024-01-16;55854.0;Charged To Guanzon Merchandising Corp. | J O 2022-341 | For Feederlines | Engr. Noly Pascua/By:Mariah Karla Cuison
+Jan 18, 2024 11:41:37 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:38 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001066	09177013632	APP_RQST EP/GK01/GK0124000041;2024-01-16;400.0;For Uemi Cauayan - Multi | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:41:38 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:40 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001071	09177013632	APP_RQST EP/GK01/GK0124000042;2024-01-16;950.0;For Mobile Department | Sticker Tagger | Twin Towers Global Tech. Inc/By:Karen De Vera
+Jan 18, 2024 11:41:41 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:41 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001082	09178214933	APP_RQST EP/M001/M00124000143;2024-01-16;40000.0;Charged To Guanzon Merchandising Corp. | Sir Onel/By:Mariah Karla Cuison
+Jan 18, 2024 11:41:42 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:42 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001101	09175693332	APP_RQST EP/GK01/GK0124000037;2024-01-16;7180.0;Tires | Rstd By Maam Leslie Espanol | Norther Automax/By:Karen De Vera.
+Approved. 
+Jan 18, 2024 11:41:43 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:41:44 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001144	09177013632	APP_RQST EP/GK01/GK0124000043;2024-01-17;800.0;For Uemi San Fabian - Yamaha | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:41:44 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:44 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001145	09177013632	APP_RQST EP/GK01/GK0124000044;2024-01-17;800.0;For Gmc Bayambang - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:41:47 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:49 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001147	09178214933	APP_RQST EP/M001/M00124000146;2024-01-17;672.0;Charged To Guanzon Merchandising Corp. | J O 2024-21 | Robinsons Calasiao | For Tarp | Engr. Kate Rondel Castro/By:Mariah Karla Cuison
+Jan 18, 2024 11:41:55 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:55 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001148	09178214933	APP_RQST EP/M001/M00124000147;2024-01-17;9999.0;Charged To Guanzon Merchandising Corp. | J O 2022-6 | For Comfort Rooms | Engr. Shawn Karl Maramba/By:Mariah Karla Cuison
+Jan 18, 2024 11:41:55 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:55 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001155	09175693332	APP_RQST EP/GK01/GK0124000047;2024-01-17;865000.0;For Mis Inventory | Computer Items | Gaisano Interpace/By:Karen De Vera.
+Approved!
+Jan 18, 2024 11:41:56 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:56 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001163	09178214933	APP_RQST EP/M001/M00124000133;2024-01-16;55854.0;Charged To Guanzon Merchandising Corp. | J O 2022-341 | For Feederlines | Engr. Noly Pascua/By:Mariah Karla Cuison
+Jan 18, 2024 11:41:56 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:41:56 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001166	09177013632	APP_RQST EP/GK01/GK0124000045;2024-01-17;800.0;For Uemi Bayambang - Yamaha | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:41:56 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:57 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001167	09177013632	APP_RQST EP/GK01/GK0124000046;2024-01-17;800.0;For Mcc Sta. Barbara - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:41:57 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:58 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001168	09177013632	APP_RQST EP/GK01/GK0124000047;2024-01-17;865000.0;For Mis Inventory | Computer Items | Gaisano Interpace/By:Karen De Vera
+Jan 18, 2024 11:41:58 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:59 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001169	09177013632	APP_RQST EP/GK01/GK0124000048;2024-01-17;2500.0;For Workshop Lifter Repair Mcc Baguio | Maschinentek | Rqst Sir Nelson Maynigo/By:Karen De Vera
+Jan 18, 2024 11:41:59 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:59 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001187	09177013632	APP_RQST EP/GK01/GK0124000049;2024-01-17;150000.0;For Staffhouse | Container | Maxiair Corporation/By:Karen De Vera
+Jan 18, 2024 11:41:59 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:41:59 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001194	09178911333	APP_RQST EP/GK01/GK0124000047;2024-01-17;865000.0;For Mis Inventory | Computer Items | Gaisano Interpace/By:Karen De Vera
+Jan 18, 2024 11:42:01 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:03 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001195	09178911333	APP_RQST EP/GK01/GK0124000049;2024-01-17;150000.0;For Staffhouse | Container | Maxiair Corporation/By:Karen De Vera
+Jan 18, 2024 11:42:05 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:06 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001197	09177013632	APP_RQST EP/GK01/GK0124000051;2024-01-17;14918.4;For Gk - Fsm Department | Locker | Sanfa Mfg | Rqst By Mam Alyana Gutierrez/By:Karen De Vera
+Jan 18, 2024 11:42:06 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:07 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001212	09178214933	APP_RQST EP/M001/M00124000133;2024-01-16;55854.0;Charged To Guanzon Merchandising Corp. | J O 2022-341 | For Feederlines | Engr. Noly Pascua/By:Mariah Karla Cuison
+Jan 18, 2024 11:42:07 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:42:07 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001264	09175693332	APP_RQST EP/GK01/GK0124000037;2024-01-16;7180.0;Tires | Rstd By Maam Leslie Espanol | Norther Automax/By:Karen De Vera.
+Approved!
+Jan 18, 2024 11:42:08 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:42:08 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001265	09175693332	APP_RQST EP/GK01/GK0124000038;2024-01-16;1200.0;For Mcc Alcala - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:08 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:09 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001266	09175693332	APP_RQST EP/GK01/GK0124000039;2024-01-16;1200.0;For Uemi Alcala - Yamaha | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:09 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:10 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001267	09175693332	APP_RQST EP/GK01/GK0124000039;2024-01-16;1200.0;For Uemi Alcala - Yamaha | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:10 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:42:10 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001268	09175693332	APP_RQST EP/GK01/GK0124000040;2024-01-16;800.0;For Lgk Pozorrubio - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:11 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:12 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001269	09175693332	APP_RQST EP/GK01/GK0124000041;2024-01-16;400.0;For Uemi Cauayan - Multi | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:12 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:12 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001270	09175693332	APP_RQST EP/GK01/GK0124000042;2024-01-16;950.0;For Mobile Department | Sticker Tagger | Twin Towers Global Tech. Inc/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:13 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:13 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001271	09175693332	APP_RQST EP/GK01/GK0124000043;2024-01-17;800.0;For Uemi San Fabian - Yamaha | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:13 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:14 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001272	09175693332	APP_RQST EP/GK01/GK0124000044;2024-01-17;800.0;For Gmc Bayambang - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:15 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:15 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001274	09175693332	APP_RQST EP/GK01/GK0124000045;2024-01-17;800.0;For Uemi Bayambang - Yamaha | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:15 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:16 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001275	09175693332	APP_RQST EP/GK01/GK0124000046;2024-01-17;800.0;For Mcc Sta. Barbara - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:18 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:19 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001276	09175693332	APP_RQST EP/GK01/GK0124000047;2024-01-17;865000.0;For Mis Inventory | Computer Items | Gaisano Interpace/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:19 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:42:20 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001277	09175693332	APP_RQST EP/GK01/GK0124000048;2024-01-17;2500.0;For Workshop Lifter Repair Mcc Baguio | Maschinentek | Rqst Sir Nelson Maynigo/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:21 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:21 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001278	09175693332	APP_RQST EP/GK01/GK0124000049;2024-01-17;150000.0;For Staffhouse | Container | Maxiair Corporation/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:23 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:24 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001279	09175693332	APP_RQST EP/GK01/GK0124000051;2024-01-17;14918.4;For Gk - Fsm Department | Locker | Sanfa Mfg | Rqst By Mam Alyana Gutierrez/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:25 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:25 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001289	09175693332	APP_RQST EP/GK01/GK0124000052;2024-01-18;800.0;For Lgk San Jacinto - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:26 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:26 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001290	09175693332	APP_RQST EP/GK01/GK0124000053;2024-01-18;1200.0;For Mcc San Jacinto - Multi | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Approved!
+Jan 18, 2024 11:42:28 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:28 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001292	09177013632	APP_RQST EP/GK01/GK0124000053;2024-01-18;1200.0;For Mcc San Jacinto - Multi | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:42:31 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:33 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001293	09177013632	APP_RQST EP/GK01/GK0124000052;2024-01-18;800.0;For Lgk San Jacinto - Honda | Fire Extinguisher (refill) | Mjd/By:Karen De Vera
+Jan 18, 2024 11:42:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 18, 2024 11:42:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001302	09178911333	APP_RQST EP/GK01/GK0124000047;2024-01-17;865000.0;For Mis Inventory | Computer Items | Gaisano Interpace/By:Karen De Vera
+Jan 18, 2024 11:42:35 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
+Jan 18, 2024 11:42:35 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00124001303	09178911333	APP_RQST EP/GK01/GK0124000049;2024-01-17;150000.0;For Staffhouse | Container | Maxiair Corporation/By:Karen De Vera
+Jan 18, 2024 11:42:36 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Token request is already APPROVED/POSTED/CANCELLED/VOID.
