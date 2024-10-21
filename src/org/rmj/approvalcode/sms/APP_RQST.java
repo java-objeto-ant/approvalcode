@@ -331,7 +331,7 @@ public class APP_RQST implements iApproval{
                 else
                     psSMS = "Your PO with trans # " + fsTransNox + " was successfully approved. You can now print the transaction.";
                 
-                sendSMS(fsTransNox, lsEngrNmbr, psSMS);
+                sendSMS(fsTransNox, psSMS, lsEngrNmbr);
             }
         }
         

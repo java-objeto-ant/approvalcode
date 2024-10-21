@@ -577,7 +577,7 @@ public class PO_EP implements iNotification{
             params.put("sTransNox", loMaster.getString("sTransNox"));
             params.put("sReferNox", loMaster.getString("sReferNox"));
             params.put("dTransact", SQLUtil.dateFormat(loMaster.getDate("dTransact"), SQLUtil.FORMAT_LONG_DATE));
-            params.put("sPrintdBy", getUserName(_instance.getUserID(), true));
+            params.put("sPrintdBy", getUserName(loMaster.getString("sPrepared"), true));
 
             //mac 2021.01.12
             //  insert name of approvee and reference no
@@ -670,6 +670,7 @@ public class PO_EP implements iNotification{
                             ", b.sProjDesc xBranchNm" +
                             ", c.sClientNm xSupplier" +
                             ", d.sDescript xTermName" +
+                            ", a.sPrepared" +
                         " FROM "  + DATABASE + ".PO_Master a" +
                             " LEFT JOIN " + DATABASE + ".Project b ON a.sBranchCd = b.sProjCode" +
                             " LEFT JOIN " + DATABASE + ".Client_Master c ON a.sSupplier = c.sClientID" +
@@ -702,12 +703,12 @@ public class PO_EP implements iNotification{
             ResultSet loRS;
                     
             if (!fbUserIDxx)
-                lsSQL = "SELECT CONCAT(sFrstName, ' ', sLastName) xFullname FROM Client_Master WHERE sClientID = " + SQLUtil.toSQL(fsValue);
+                lsSQL = "SELECT CONCAT(sFrstName, ' ', sLastName) xFullname FROM " + DATABASE + ".Client_Master WHERE sClientID = " + SQLUtil.toSQL(fsValue);
             else
                 lsSQL = "SELECT" +
                         "  CONCAT(b.sFrstName, ' ', b.sLastName) xFullname" +
-                    " FROM xxxSysUser a" +
-                        ", Client_Master b" +
+                    " FROM " + DATABASE + ".xxxSysUser a" +
+                        ", " + DATABASE + ".Client_Master b" +
                     " WHERE a.sEmployNo = b.sClientID" +
                         " AND a.sUserIDxx = " + SQLUtil.toSQL(fsValue);
         
