@@ -36,7 +36,6 @@ public class SendNotification {
         
         //assign the transaction number if passed
         if (args.length != 0) instance.setTransNox(args[0]);
-        //instance.setTransNox("MX0121001822");
         
         if (!instance.SendNotification()){
             logwrapr.severe(instance.getMessage());
