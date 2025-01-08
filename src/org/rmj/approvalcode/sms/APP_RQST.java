@@ -135,11 +135,13 @@ public class APP_RQST implements iApproval{
                 return false;
             }
         } else {
+            lasSMS = lasSMS[2].split(";");
+            
             lsSQL = "INSERT INTO Transaction_Approvals SET" +
                     "  sTransNox = " + SQLUtil.toSQL(MiscUtil.getNextCode("Transaction_Approvals", "sTransNox", true, poGRider.getConnection(), poGRider.getBranchCode())) +
                     ", dTransact = " + SQLUtil.toSQL(poGRider.getServerDate()) +
                     ", sSourceCd = " + SQLUtil.toSQL(lsRequest) +
-                    ", sReferNox = " + SQLUtil.toSQL(lasSMS[2]) +
+                    ", sReferNox = " + SQLUtil.toSQL(lasSMS[0]) +
                     ", sEmployID = " + SQLUtil.toSQL(psEmployID) +
                     ", sMobileNo = " + SQLUtil.toSQL(psSender) +
                     ", cApproved = '1'";

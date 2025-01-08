@@ -35,7 +35,7 @@ public class SMSProcessor {
                             ", sMessagex" +
                             ", sMobileNo" +
                         " FROM SMS_Incoming" +
-                        " WHERE LEFT(sMessagex, 8) LIKE 'APP_RQST'" +
+                        " WHERE LEFT(sMessagex, 11) LIKE 'APP_RQST LP'" +
                             " AND (cTranStat IS NULL OR cTranStat = '0')";
         
         ResultSet loRS = poGRider.executeQuery(lsSQL);

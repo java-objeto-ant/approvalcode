@@ -15,7 +15,7 @@ public class NotificationFactory {
                         object.setSourceCode(fsSourceCd);
                         object.setRequestType(fsRqstType);
                         return object;
-                    case "LPPO":
+                    case "LP":
                         object = new PO_LP();
                         object.setGRider(foGRider);
                         object.setSourceCode(fsSourceCd);

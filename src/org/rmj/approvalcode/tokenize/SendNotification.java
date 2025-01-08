@@ -32,7 +32,7 @@ public class SendNotification {
         
         logwrapr.info("Start of Process.");
         
-        iNotification instance = NotificationFactory.make(poGRider, "PO", "EP");        
+        iNotification instance = NotificationFactory.make(poGRider, "PO", "LP");        
         
         //assign the transaction number if passed
         if (args.length != 0) instance.setTransNox(args[0]);

@@ -1300,3 +1300,95 @@ Jan 08, 2025 9:05:41 AM org.rmj.replication.utility.LogWrapper info
 INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
 Jan 08, 2025 9:06:17 AM org.rmj.replication.utility.LogWrapper info
 INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
+Jan 08, 2025 9:55:50 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
+Jan 08, 2025 9:56:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000544	09175257115	APP_RQST EP/M001/M00125000082;2025-01-07;670.0;Charged To Guanzon Merchandising Corp. | Main House Roofing Works | Engr. Marco Abarabar/By:Mariah Karla Cuison
+Jan 08, 2025 9:56:34 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Data truncation: Data too long for column 'sReferNox' at row 1; 
+Jan 08, 2025 10:40:58 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 10:41:22 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 10:41:22 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 10:43:40 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 10:48:41 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 10:48:42 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 10:48:42 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 10:50:16 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 10:50:17 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 10:50:17 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 10:51:35 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 10:51:37 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 10:51:37 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 10:58:35 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000567	09453552559	APP_RQST LP/P0W1/P0W125000230;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 10:58:37 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Data truncation: Data too long for column 'sReferNox' at row 1; 
+Jan 08, 2025 10:59:36 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000567	09453552559	APP_RQST LP/P0W1/P0W125000230;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 11:00:51 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000567	09453552559	APP_RQST LP/P0W1/P0W125000230;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 11:01:21 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000567	09453552559	APP_RQST LP/P0W1/P0W125000230;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 11:01:25 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 08, 2025 11:01:26 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000568	09176294756	APP_RQST LP/P0W1/P0W125000230;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 11:01:32 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.
+Jan 08, 2025 11:25:52 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 11:25:53 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 11:25:53 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 11:26:00 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 11:26:00 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 11:26:00 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 11:27:38 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 11:27:39 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 11:27:39 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 11:27:46 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 11:27:47 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 11:27:47 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 11:39:32 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 11:39:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 11:39:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 11:40:29 AM org.rmj.replication.utility.LogWrapper info
+INFO: Start of Process.
+Jan 08, 2025 11:40:31 AM org.rmj.replication.utility.LogWrapper info
+INFO: Notifications sent successfully via utility.
+Jan 08, 2025 11:40:31 AM org.rmj.replication.utility.LogWrapper info
+INFO: Thank you.
+Jan 08, 2025 11:43:06 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000582	09190728730	APP_RQST LP/P0W1/P0W125000237;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 11:43:06 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Mobile number is not authorized for approving requests.
+Jan 08, 2025 11:50:06 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000582	09321667661	APP_RQST LP/P0W1/P0W125000237;2025-01-08;1000.0;Test Entry, Please Disregard -mac/By:Michael Cuison
+Jan 08, 2025 11:50:08 AM org.rmj.replication.utility.LogWrapper info
+INFO: Token approval request was approved successfully.

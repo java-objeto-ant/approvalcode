@@ -106,27 +106,45 @@ public class PO_LP implements iNotification{
         String lsSQL;
         
         //get the requests that are not yet sent
+//        lsSQL = "SELECT" +
+//                    "  a.sTransNox" +
+//                    ", a.dTransact" +
+//                    ", a.sSourceNo" +
+//                    ", a.sSourceCd" +
+//                    ", a.sRqstType" +
+//                    ", a.sReqstInf" +
+//                    ", a.sReqstdTo" +
+//                    ", a.sMobileNo" +
+//                    ", a.cSendxxxx" +
+//                    ", a.sReqstdBy" +
+//                " FROM GGC_ISysDBF.Tokenized_Approval_Request a" +
+//                    ", " + DATABASE + ".PO_Master b" +
+//                " WHERE a.sSourceNo = b.sTransNox" +
+//                    " AND a.sSourceCd = " + SQLUtil.toSQL(SOURCECD) +
+//                    " AND a.sRqstType = " + SQLUtil.toSQL(RQSTTYPE) +
+//                    " AND a.cApprType = '1'" + //requested approval type is tokenized
+//                    " AND b.cTranStat = '0'" + //not approved PO
+//                    " AND a.cTranStat = '0'" + //not approved request
+//                    " AND a.cSendxxxx < '2'" + //not yet sent notification
+//                    " AND b.dTransact >= '2022-01-01'"; //2021-06-04
+        
         lsSQL = "SELECT" +
-                    "  a.sTransNox" +
-                    ", a.dTransact" +
-                    ", a.sSourceNo" +
-                    ", a.sSourceCd" +
-                    ", a.sRqstType" +
-                    ", a.sReqstInf" +
-                    ", a.sReqstdTo" +
-                    ", a.sMobileNo" +
-                    ", a.cSendxxxx" +
-                    ", a.sReqstdBy" +
-                " FROM GGC_ISysDBF.Tokenized_Approval_Request a" +
-                    ", " + DATABASE + ".PO_Master b" +
-                " WHERE a.sSourceNo = b.sTransNox" +
-                    " AND a.sSourceCd = " + SQLUtil.toSQL(SOURCECD) +
-                    " AND a.sRqstType = " + SQLUtil.toSQL(RQSTTYPE) +
-                    " AND a.cApprType = '1'" + //requested approval type is tokenized
-                    " AND b.cTranStat = '0'" + //not approved PO
-                    " AND a.cTranStat = '0'" + //not approved request
-                    " AND a.cSendxxxx < '2'" + //not yet sent notification
-                    " AND b.dTransact >= '2022-01-01'"; //2021-06-04
+                "  a.sTransNox" +
+                ", a.dTransact" +
+                ", a.sSourceNo" +
+                ", a.sSourceCd" +
+                ", a.sRqstType" +
+                ", a.sReqstInf" +
+                ", a.sReqstdTo" +
+                ", a.sMobileNo" +
+                ", a.cSendxxxx" +
+                ", a.sReqstdBy" +
+            " FROM GGC_ISysDBF.Tokenized_Approval_Request a" +
+            " WHERE a.sSourceCd = " + SQLUtil.toSQL(SOURCECD) +
+                " AND a.sRqstType = " + SQLUtil.toSQL(RQSTTYPE) +
+                " AND a.cApprType = '1'" + //requested approval type is tokenized
+                " AND a.cTranStat = '0'" + //not approved request
+                " AND a.cSendxxxx < '2'"; //not yet sent notification
         
         //user is sending an specific PO request
         if (!_transnox.equals("")) 
@@ -148,25 +166,25 @@ public class PO_LP implements iNotification{
                 
                 //the request already sent an sms but email is not yet sent
                 if (loRS.getString("cSendxxxx").equals("1")){                        
-                    if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
-                        if (sendGMail()){ //send email //sendMail()
-                            System.out.println("Email notification sent successfully.");
-                            
-                            Date ldDate = _instance.getServerDate();
-                            
-                            lsSQL = "UPDATE GGC_ISysDBF.Tokenized_Approval_Request SET" +
-                                        "  cSendxxxx = '2'" +
-                                        ", dSendDate = " + SQLUtil.toSQL(ldDate) +
-                                    " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-                            _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
-                            
-                            lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
-                                        "  cSendxxxx = '2'" +
-                                        ", dSendDate = " + SQLUtil.toSQL(ldDate) +
-                                    " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-                            _instance.executeUpdate(lsSQL);
-                        }
-                    }
+//                    if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
+//                        if (sendGMail()){ //send email //sendMail()
+//                            System.out.println("Email notification sent successfully.");
+//                            
+//                            Date ldDate = _instance.getServerDate();
+//                            
+//                            lsSQL = "UPDATE GGC_ISysDBF.Tokenized_Approval_Request SET" +
+//                                        "  cSendxxxx = '2'" +
+//                                        ", dSendDate = " + SQLUtil.toSQL(ldDate) +
+//                                    " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
+//                            _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
+//                            
+//                            lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
+//                                        "  cSendxxxx = '2'" +
+//                                        ", dSendDate = " + SQLUtil.toSQL(ldDate) +
+//                                    " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
+//                            _instance.executeUpdate(lsSQL);
+//                        }
+//                    }
                 } else { //no notification has been sent
                     if (sendSMS(loRS.getString("sMobileNo"), lsSQL, loRS.getString("sSourceNo"))){ //send sms first
                         if (TOPMGMNT.contains(loRS.getString("sReqstdTo"))){
@@ -177,12 +195,12 @@ public class PO_LP implements iNotification{
                         System.out.println("SMS notification sent successfully.");
                         lnStat += 1;
                         
-                        if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
-                            if (sendMail()) { //send mail
-                                lnStat += 1; 
-                                System.out.println("Email notification sent successfully.");
-                            }
-                        }                       
+//                        if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
+//                            if (sendMail()) { //send mail
+//                                lnStat += 1; 
+//                                System.out.println("Email notification sent successfully.");
+//                            }
+//                        }                       
                         
                         lsSQL = "UPDATE GGC_ISysDBF.Tokenized_Approval_Request SET" +
                                     "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
@@ -190,11 +208,11 @@ public class PO_LP implements iNotification{
                                 " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
                         _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
                         
-                        lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
-                                    "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
-                                    ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
-                                " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-                        _instance.executeUpdate(lsSQL);
+//                        lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
+//                                    "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
+//                                    ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
+//                                " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
+//                        _instance.executeUpdate(lsSQL);
                     }
                 }       
             }
