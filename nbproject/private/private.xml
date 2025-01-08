@@ -29,7 +29,11 @@
         <group name="Utillities"/>
         <group name="GCARD"/>
         <group name="Utilities">
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/test/testEncrypt.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/test/testDissect.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/SendNotification.java</file>
             <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/PO_LP.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/test/testDecrypt64.java</file>
         </group>
     </open-files>
 </project-private>

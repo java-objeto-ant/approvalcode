@@ -150,7 +150,7 @@ public class APP_RQST implements iApproval{
             }
         }
 
-        String lsMessage = "Thank you for approving Purchase Order with transaction number " + (String) loJSON.get("sSourceNo") + ".";
+        String lsMessage = "Thank you for sending an approval for Purchase Order with transaction number " + (String) loJSON.get("sSourceNo") + ".";
         sendSMS((String) loJSON.get("sMobileNo"), lsMessage);
         
         psMessage = "Token approval request was approved successfully.";

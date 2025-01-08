@@ -1288,3 +1288,15 @@ Sep 17, 2024 4:52:41 PM org.rmj.replication.utility.LogWrapper info
 INFO: Thank you.
 Sep 17, 2024 4:52:57 PM org.rmj.replication.utility.LogWrapper info
 INFO: Start of Process.
+Jan 08, 2025 9:04:22 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000540	09176340516	APP_RQST PO/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
+Jan 08, 2025 9:04:22 AM org.rmj.replication.utility.LogWrapper warning
+WARNING: Request type is not registered to the system.
+Jan 08, 2025 9:04:22 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
+Jan 08, 2025 9:05:34 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
+Jan 08, 2025 9:05:41 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
+Jan 08, 2025 9:06:17 AM org.rmj.replication.utility.LogWrapper info
+INFO: M00125000541	09176340516	APP_RQST LP/GK01/GK0125000003;2025-01-03;121500.0;For Monarch Lot Extension - The Waltz | Scaffolding | Requested By Engr. Mcjoe/By:Karen De Vera
