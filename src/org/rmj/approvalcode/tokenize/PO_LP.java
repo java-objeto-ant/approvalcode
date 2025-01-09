@@ -146,25 +146,6 @@ public class PO_LP implements iNotification{
 
                 //the request already sent an sms but email is not yet sent
                 if (loRS.getString("cSendxxxx").equals("1")) {
-//                    if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
-//                        if (sendGMail()){ //send email //sendMail()
-//                            System.out.println("Email notification sent successfully.");
-//                            
-//                            Date ldDate = _instance.getServerDate();
-//                            
-//                            lsSQL = "UPDATE GGC_ISysDBF.Tokenized_Approval_Request SET" +
-//                                        "  cSendxxxx = '2'" +
-//                                        ", dSendDate = " + SQLUtil.toSQL(ldDate) +
-//                                    " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-//                            _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
-//                            
-//                            lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
-//                                        "  cSendxxxx = '2'" +
-//                                        ", dSendDate = " + SQLUtil.toSQL(ldDate) +
-//                                    " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-//                            _instance.executeUpdate(lsSQL);
-//                        }
-//                    }
                 } else { //no notification has been sent
                     if (sendSMS(loRS.getString("sMobileNo"), lsSQL, loRS.getString("sSourceNo"))) { //send sms first
 
@@ -176,34 +157,21 @@ public class PO_LP implements iNotification{
                         //send details
                         lsDetail = generateDetailSMS(_sourceno);
                         if (!lsDetail.isEmpty()) {
-//                            System.err.println(lsDetail);
                             if (sendSMS(loRS.getString("sMobileNo"), lsDetail, loRS.getString("sSourceNo"))) {
-                                System.out.println("Detail notification sent successfully.");
-
+                                System.out.println("Order detailed notification sent successfully.");
+                            } else {
+                                System.err.println("Unable to send order detailed notification sent successfully.");
                             }
                         }
 
                         System.out.println("SMS notification sent successfully.");
-                        lnStat += 1;
-
-//                        if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
-//                            if (sendMail()) { //send mail
-//                                lnStat += 1; 
-//                                System.out.println("Email notification sent successfully.");
-//                            }
-//                        }                       
+                        lnStat += 1;                     
                         
                         lsSQL = "UPDATE GGC_ISysDBF.Tokenized_Approval_Request SET" +
                                     "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
                                     ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
                                 " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
                         _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
-
-//                        lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
-//                                    "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
-//                                    ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
-//                                " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-//                        _instance.executeUpdate(lsSQL);
                     }
                 }
             }
@@ -674,12 +642,10 @@ public class PO_LP implements iNotification{
                             ", a.sRemarksx" +
                             ", a.sInvTypCd" +
                             ", a.nEntryNox" +
-                            ", b.sProjDesc xBranchNm" +
                             ", c.sClientNm xSupplier" +
                             ", d.sDescript xTermName" +
                             ", a.sPrepared" +
                         " FROM "  + DATABASE + ".PO_Master a" +
-                            " LEFT JOIN " + DATABASE + ".Project b ON a.sBranchCd = b.sProjCode" +
                             " LEFT JOIN " + DATABASE + ".Client_Master c ON a.sSupplier = c.sClientID" +
                             " LEFT JOIN " + DATABASE + ".Term d ON a.sTermCode = d.sTermCode" +
                         " WHERE a.sTransNox = " + SQLUtil.toSQL(fsTransNox);
@@ -849,22 +815,24 @@ public class PO_LP implements iNotification{
             return "";
         }
 
-        String lsSupplier = loMaster.getString("xSupplier");
-        String lsTotalAmt = loMaster.getString("nTranTotl");
+        String lsSupplier = loMaster.getString("xSupplier").trim();
+        String lsTotalAmt = CommonUtils.NumberFormat(loMaster.getDouble("nTranTotl"), "#,##0.00") ;
 
-        lsDetail = "Good day sir.\n\n"
-                + "Here is the details of the " + _sourceno + "/" + lsSupplier + "/" + lsTotalAmt + " requested for your approval.\n\n";
+        lsDetail = "Good day.\n"
+                    + "Here are the order details of transaction " + _sourceno + "/" + lsSupplier + "/" + lsTotalAmt + " requesting for your approval.\n\n";
+        
         loDetail.beforeFirst();
         while (loDetail.next()) {
-            lsDetail += lsDetail
-                    + loDetail.getString("nEntryNox") + ". "
-                    + loDetail.getString("sDescript") + " - "
-                    + loDetail.getString("nUnitPrce") + " \n\n";
+            lsDetail += loDetail.getString("nEntryNox") + ". "
+                        + loDetail.getString("sDescript") + "/"
+                        + "Q:" + loDetail.getString("nQuantity") + "/"
+                        + "C:" + loDetail.getString("nUnitPrce") + "\n";
 
         }
-        lsDetail += "A SMS approval request was sent to your mobile number \n\n"
-                + "To approve the transaction kindly forward the SMS approval request to 09479906531."
-                + " Thank you.";
+        
+        lsDetail += "\nA separate approval message was sent to your mobile number."
+                    + " To approve the transaction kindly forward the approval message to 09479906531."
+                    + " Thank you.";
 
         return lsDetail;
     }
