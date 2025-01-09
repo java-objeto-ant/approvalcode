@@ -55,6 +55,7 @@ public class PO_LP implements iNotification{
     String _sourcecd;
     String _rqsttype;
     String _transnox;
+    String _sourceno;
     String _messagex;
     
     boolean _singletx = false;
@@ -85,25 +86,26 @@ public class PO_LP implements iNotification{
     @Override
     public boolean SendNotification() {
         _messagex = "";
-        
-        if (!_sourcecd.equals(SOURCECD)){
+
+        if (!_sourcecd.equals(SOURCECD)) {
             _messagex = "Source transaction is not for this object.";
             return false;
         }
-        
-        if (!_rqsttype.equals(RQSTTYPE)){
+
+        if (!_rqsttype.equals(RQSTTYPE)) {
             _messagex = "Request type is not for this object.";
             return false;
         }
-        
-        if (_instance == null){
+
+        if (_instance == null) {
             _messagex = "Application driver is not set.";
             return false;
         }
-        
+
         processTopManagementApproval();
-        
+
         String lsSQL;
+        String lsDetail;
 
         lsSQL = "SELECT" +
                 "  a.sTransNox" +
@@ -122,27 +124,28 @@ public class PO_LP implements iNotification{
                 " AND a.cApprType = '1'" + //requested approval type is tokenized
                 " AND a.cTranStat = '0'" + //not approved request
                 " AND a.cSendxxxx < '2'"; //not yet sent notification
-        
+
         //user is sending an specific PO request
-        if (!_transnox.equals("")) 
+        if (!_transnox.equals("")) {
             lsSQL = MiscUtil.addCondition(lsSQL, "a.sTransNox = " + SQLUtil.toSQL(_transnox));
-        else
+        } else {
             lsSQL = MiscUtil.addCondition(lsSQL, "a.dRcvdDate <= DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL -1 MINUTE)");
-        
+        }
+
         ResultSet loRS = _instance.executeQuery(lsSQL);
-        
+
         try {
             int lnStat = 0;
-            
-            while (loRS.next()){                
-                _transnox = loRS.getString("sTransNox");
 
+            while (loRS.next()) {
+                _transnox = loRS.getString("sTransNox");
+                _sourceno = loRS.getString("sSourceNo");
                 lnStat = 0;
-                
+
                 lsSQL = "APP_RQST " + RQSTTYPE + "/" + loRS.getString("sReqstInf").substring(0, 4) + "/" + loRS.getString("sReqstInf") + "/By:" + getUserName(loRS.getString("sReqstdBy"), false);
-                
+
                 //the request already sent an sms but email is not yet sent
-                if (loRS.getString("cSendxxxx").equals("1")){                        
+                if (loRS.getString("cSendxxxx").equals("1")) {
 //                    if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
 //                        if (sendGMail()){ //send email //sendMail()
 //                            System.out.println("Email notification sent successfully.");
@@ -163,20 +166,26 @@ public class PO_LP implements iNotification{
 //                        }
 //                    }
                 } else { //no notification has been sent
-                    if (sendSMS(loRS.getString("sMobileNo"), lsSQL, loRS.getString("sSourceNo"))){ //send sms first
-                        //send details
-                        
-                        if (TOPMGMNT.contains(loRS.getString("sReqstdTo"))){
+                    if (sendSMS(loRS.getString("sMobileNo"), lsSQL, loRS.getString("sSourceNo"))) { //send sms first
+
+                        if (TOPMGMNT.contains(loRS.getString("sReqstdTo"))) {
                             sendSMS("09176387208", lsSQL, loRS.getString("sSourceNo"));
                             sendSMS("09176340516", lsSQL, loRS.getString("sSourceNo"));
-                        
-                            //send details
-                            //send details
+
+                        }
+                        //send details
+                        lsDetail = generateDetailSMS(_sourceno);
+                        if (!lsDetail.isEmpty()) {
+//                            System.err.println(lsDetail);
+                            if (sendSMS(loRS.getString("sMobileNo"), lsDetail, loRS.getString("sSourceNo"))) {
+                                System.out.println("Detail notification sent successfully.");
+
+                            }
                         }
 
                         System.out.println("SMS notification sent successfully.");
                         lnStat += 1;
-                        
+
 //                        if (export2PDF(loRS.getString("sSourceNo"))){ //export pdf to send
 //                            if (sendMail()) { //send mail
 //                                lnStat += 1; 
@@ -189,20 +198,21 @@ public class PO_LP implements iNotification{
                                     ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
                                 " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
                         _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
-                        
+
 //                        lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
 //                                    "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
 //                                    ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
 //                                " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
 //                        _instance.executeUpdate(lsSQL);
                     }
-                }       
+                }
             }
-            
-            if (_singletx)
+
+            if (_singletx) {
                 _messagex = "Notification sent successfully(" + lnStat + ")";
-            else
+            } else {
                 _messagex = "Notifications sent successfully via utility.";
+            }
         } catch (SQLException ex) {
             _messagex = ex.getMessage();
             return false;
@@ -822,5 +832,40 @@ public class PO_LP implements iNotification{
         }
         
         return 0.00;
+    }
+    
+    private String generateDetailSMS(String fsSource) throws SQLException {
+        String lsDetail;
+        ResultSet loMaster = loadMaster(fsSource);
+        if (!loMaster.next()) {
+            _messagex = "Unable to load master record. " + _sourceno;
+            return "";
+        }
+
+        //load detail
+        ResultSet loDetail = loadDetail(fsSource);
+        if (loDetail == null) {
+            _messagex = "Unable to load detail record. " + _sourceno;
+            return "";
+        }
+
+        String lsSupplier = loMaster.getString("xSupplier");
+        String lsTotalAmt = loMaster.getString("nTranTotl");
+
+        lsDetail = "Good day sir.\n\n"
+                + "Here is the details of the " + _sourceno + "/" + lsSupplier + "/" + lsTotalAmt + " requested for your approval.\n\n";
+        loDetail.beforeFirst();
+        while (loDetail.next()) {
+            lsDetail += lsDetail
+                    + loDetail.getString("nEntryNox") + ". "
+                    + loDetail.getString("sDescript") + " - "
+                    + loDetail.getString("nUnitPrce") + " \n\n";
+
+        }
+        lsDetail += "A SMS approval request was sent to your mobile number \n\n"
+                + "To approve the transaction kindly forward the SMS approval request to 09479906531."
+                + " Thank you.";
+
+        return lsDetail;
     }
 }
