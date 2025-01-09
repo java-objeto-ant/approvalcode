@@ -104,30 +104,7 @@ public class PO_LP implements iNotification{
         processTopManagementApproval();
         
         String lsSQL;
-        
-        //get the requests that are not yet sent
-//        lsSQL = "SELECT" +
-//                    "  a.sTransNox" +
-//                    ", a.dTransact" +
-//                    ", a.sSourceNo" +
-//                    ", a.sSourceCd" +
-//                    ", a.sRqstType" +
-//                    ", a.sReqstInf" +
-//                    ", a.sReqstdTo" +
-//                    ", a.sMobileNo" +
-//                    ", a.cSendxxxx" +
-//                    ", a.sReqstdBy" +
-//                " FROM GGC_ISysDBF.Tokenized_Approval_Request a" +
-//                    ", " + DATABASE + ".PO_Master b" +
-//                " WHERE a.sSourceNo = b.sTransNox" +
-//                    " AND a.sSourceCd = " + SQLUtil.toSQL(SOURCECD) +
-//                    " AND a.sRqstType = " + SQLUtil.toSQL(RQSTTYPE) +
-//                    " AND a.cApprType = '1'" + //requested approval type is tokenized
-//                    " AND b.cTranStat = '0'" + //not approved PO
-//                    " AND a.cTranStat = '0'" + //not approved request
-//                    " AND a.cSendxxxx < '2'" + //not yet sent notification
-//                    " AND b.dTransact >= '2022-01-01'"; //2021-06-04
-        
+
         lsSQL = "SELECT" +
                 "  a.sTransNox" +
                 ", a.dTransact" +
@@ -187,9 +164,14 @@ public class PO_LP implements iNotification{
 //                    }
                 } else { //no notification has been sent
                     if (sendSMS(loRS.getString("sMobileNo"), lsSQL, loRS.getString("sSourceNo"))){ //send sms first
+                        //send details
+                        
                         if (TOPMGMNT.contains(loRS.getString("sReqstdTo"))){
                             sendSMS("09176387208", lsSQL, loRS.getString("sSourceNo"));
                             sendSMS("09176340516", lsSQL, loRS.getString("sSourceNo"));
+                        
+                            //send details
+                            //send details
                         }
 
                         System.out.println("SMS notification sent successfully.");
