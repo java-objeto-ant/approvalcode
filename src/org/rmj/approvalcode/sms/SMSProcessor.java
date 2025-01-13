@@ -10,7 +10,7 @@ public class SMSProcessor {
     public static void main (String [] args){
         LogWrapper logwrapr = new LogWrapper("SMS.Approval", "sms-token.log");       
         
-        String lsProdctID = "IntegSys";
+        String lsProdctID = "gRider";
         String lsUserIDxx = "M001111122";
 
         String path;
@@ -35,7 +35,7 @@ public class SMSProcessor {
                             ", sMessagex" +
                             ", sMobileNo" +
                         " FROM SMS_Incoming" +
-                        " WHERE LEFT(sMessagex, 11) LIKE 'APP_RQST LP'" +
+                        " WHERE LEFT(sMessagex, 8) = 'APP_RQST'" +
                             " AND (cTranStat IS NULL OR cTranStat = '0')";
         
         ResultSet loRS = poGRider.executeQuery(lsSQL);

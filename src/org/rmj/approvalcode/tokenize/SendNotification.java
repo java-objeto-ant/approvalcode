@@ -19,7 +19,7 @@ public class SendNotification {
         System.setProperty("sys.default.path.temp", path + "/temp");
         System.setProperty("sys.default.path.config", path);
         
-        String lsProdctID = "IntegSys";
+        String lsProdctID = "gRider";
         String lsUserIDxx = "M001111122";
         
         GRider poGRider = new GRider(lsProdctID);
@@ -33,7 +33,7 @@ public class SendNotification {
         logwrapr.info("Start of Process.");
         
         iNotification instance = NotificationFactory.make(poGRider, "PO", "LP");        
-        
+       
         //assign the transaction number if passed
         if (args.length != 0) instance.setTransNox(args[0]);
         

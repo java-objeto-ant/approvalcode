@@ -33,6 +33,7 @@ public class APP_RQST implements iApproval{
     String psEmployID;
     String psMessage;
     String psErrCode;
+    String psRequest;
     
     @Override
     public void setGRider(GRider foApp) {
@@ -85,6 +86,8 @@ public class APP_RQST implements iApproval{
         String [] lasRequest = lasSMS[0].split(" ");
         String lsRequest = lasRequest[1];
         if (!isValidRequest(lsRequest)) return false;
+        
+        psRequest = lsRequest;
         
         //get and validate auth token vs the records passed
         String lsAuthTokn = getAuthToken(lasRequest[1]);
@@ -409,7 +412,7 @@ public class APP_RQST implements iApproval{
         JSONObject param = new JSONObject();
         param.put("message", fsMessagex);
         param.put("mobileno", fsMobileNo);
-        param.put("maskname", "GUANZON");
+        param.put("maskname", psRequest.equalsIgnoreCase("lp") ? "LOSPEDRITOS" : "GUANZON");
         
         String response;
         try {
