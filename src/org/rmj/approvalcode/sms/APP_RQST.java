@@ -25,9 +25,7 @@ import org.rmj.engr.purchasing.base.PurchaseOrder;
  * @author Michael Cuison
  *      2020.12.08  Started creating this object.
  */
-public class APP_RQST implements iApproval{
-    private final String TOPMGMNT = "M00119002175"; //1 - bos jo; 2 - bos onel; 3 - bos guan; ;M00119002653;M00120001290
-    
+public class APP_RQST implements iApproval{    
     GRider poGRider;
     String psSender;
     String psSMS;
@@ -35,6 +33,7 @@ public class APP_RQST implements iApproval{
     String psEmployID;
     String psMessage;
     String psErrCode;
+    String psRequest;
     
     @Override
     public void setGRider(GRider foApp) {
@@ -88,6 +87,8 @@ public class APP_RQST implements iApproval{
         String lsRequest = lasRequest[1];
         if (!isValidRequest(lsRequest)) return false;
         
+        psRequest = lsRequest;
+        
         //get and validate auth token vs the records passed
         String lsAuthTokn = getAuthToken(lasRequest[1]);
         if (lsAuthTokn.isEmpty()) return false;
@@ -104,41 +105,58 @@ public class APP_RQST implements iApproval{
             return false;
         }
         
+        String lsSQL;
+        
         //generate approval code
         String lsAppvlCde = Tokenize.EncryptApprovalToken((String) loJSON.get("sTransNox"), "1", (String) loJSON.get("sRqstType"), (String) loJSON.get("sReqstdTo"));
         
         //all entries are valid, you can now approve the request.
-        String lsSQL = "UPDATE Tokenized_Approval_Request SET" +
+        lsSQL = "UPDATE Tokenized_Approval_Request SET" +
                             "  cApprType = '1'" + 
                             ", sAuthTokn = " + SQLUtil.toSQL(lsAuthTokn) + 
                             ", sApprCode = " + SQLUtil.toSQL(lsAppvlCde) + 
                             ", dApproved = " + SQLUtil.toSQL(poGRider.getServerDate()) + 
                             ", cTranStat = '1'" +
                         " WHERE sTransNox = " + SQLUtil.toSQL((String) loJSON.get("sTransNox"));
-        
+
         if (poGRider.executeQuery(lsSQL, "Tokenized_Approval_Request", poGRider.getBranchCode(), "") <= 0){
             psMessage = poGRider.getErrMsg() + "; " + poGRider.getMessage();
             return false;
         }
         
-        //update casys_dbf
-        lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
-                    "  cApprType = '1'" + 
-                    ", sAuthTokn = " + SQLUtil.toSQL(lsAuthTokn) + 
-                    ", sApprCode = " + SQLUtil.toSQL(lsAppvlCde) + 
-                    ", dApproved = " + SQLUtil.toSQL(poGRider.getServerDate()) + 
-                    ", cTranStat = '1'" +
-                " WHERE sTransNox = " + SQLUtil.toSQL((String) loJSON.get("sTransNox"));
-        if (poGRider.executeUpdate(lsSQL) <= 0){
-            psMessage = poGRider.getErrMsg() + "; " + poGRider.getMessage();
-            return false;
+        if (lsAuthTokn.equalsIgnoreCase("ep")){
+            //update casys_dbf
+            lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
+                        "  cApprType = '1'" + 
+                        ", sAuthTokn = " + SQLUtil.toSQL(lsAuthTokn) + 
+                        ", sApprCode = " + SQLUtil.toSQL(lsAppvlCde) + 
+                        ", dApproved = " + SQLUtil.toSQL(poGRider.getServerDate()) + 
+                        ", cTranStat = '1'" +
+                    " WHERE sTransNox = " + SQLUtil.toSQL((String) loJSON.get("sTransNox"));
+            if (poGRider.executeUpdate(lsSQL) <= 0){
+                psMessage = poGRider.getErrMsg() + "; " + poGRider.getMessage();
+                return false;
+            }
+        } else {
+            lasSMS = lasSMS[2].split(";");
+            
+            lsSQL = "INSERT INTO Transaction_Approvals SET" +
+                    "  sTransNox = " + SQLUtil.toSQL(MiscUtil.getNextCode("Transaction_Approvals", "sTransNox", true, poGRider.getConnection(), poGRider.getBranchCode())) +
+                    ", dTransact = " + SQLUtil.toSQL(poGRider.getServerDate()) +
+                    ", sSourceCd = " + SQLUtil.toSQL(lsRequest) +
+                    ", sReferNox = " + SQLUtil.toSQL(lasSMS[0]) +
+                    ", sEmployID = " + SQLUtil.toSQL(psEmployID) +
+                    ", sMobileNo = " + SQLUtil.toSQL(psSender) +
+                    ", cApproved = '1'";
+            
+            if (poGRider.executeUpdate(lsSQL) <= 0){
+                psMessage = poGRider.getErrMsg() + "; " + poGRider.getMessage();
+                return false;
+            }
         }
 
-        if (TOPMGMNT.contains((String) loJSON.get("sReqstdTo"))){
-            String lsMessage = "Thank you for approving Engineering Purchase Order with transaction number " + (String) loJSON.get("sSourceNo") + ".";
-            
-            sendSMS((String) loJSON.get("sSourceNo"), lsMessage, (String) loJSON.get("sMobileNo"));
-        }
+        String lsMessage = "Thank you for sending an approval for Purchase Order with transaction number " + (String) loJSON.get("sSourceNo") + ".";
+        sendSMS((String) loJSON.get("sMobileNo"), lsMessage);
         
         psMessage = "Token approval request was approved successfully.";
         
@@ -394,7 +412,7 @@ public class APP_RQST implements iApproval{
         JSONObject param = new JSONObject();
         param.put("message", fsMessagex);
         param.put("mobileno", fsMobileNo);
-        param.put("maskname", "GUANZON");
+        param.put("maskname", psRequest.equalsIgnoreCase("lp") ? "LOSPEDRITOS" : "GUANZON");
         
         String response;
         try {
