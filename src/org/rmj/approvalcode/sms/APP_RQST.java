@@ -124,7 +124,7 @@ public class APP_RQST implements iApproval{
             return false;
         }
         
-        if (lsAuthTokn.equalsIgnoreCase("ep")){
+        if (lsRequest.equalsIgnoreCase("ep")){
             //update casys_dbf
             lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
                         "  cApprType = '1'" + 
