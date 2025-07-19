@@ -3,7 +3,7 @@ package org.rmj.approvalcode.tokenize;
 import org.rmj.appdriver.GRider;
 import org.rmj.replication.utility.LogWrapper;
 
-public class SendNotification {
+public class SendNotificationEP {
     public static void main(String [] args){
         LogWrapper logwrapr = new LogWrapper("SMS.Notification", "sms-token.log");       
 
@@ -18,7 +18,7 @@ public class SendNotification {
         
         System.setProperty("sys.default.path.temp", path + "/temp");
         System.setProperty("sys.default.path.config", path);
-        
+
         String lsProdctID = "gRider";
         String lsUserIDxx = "M001111122";
         
