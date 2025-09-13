@@ -126,13 +126,19 @@ public class APP_RQST implements iApproval{
         
         if (lsRequest.equalsIgnoreCase("ep")){
             //update casys_dbf
-            lsSQL = "UPDATE CASys_DBF.Tokenized_Approval_Request SET" +
-                        "  cApprType = '1'" + 
+            lsSQL = "INSERT INTO CASys_DBF.Tokenized_Approval_Request SET" +
+                        "  sTransNox = " + SQLUtil.toSQL((String) loJSON.get("sTransNox")) +
+                        ", cApprType = '1'" + 
                         ", sAuthTokn = " + SQLUtil.toSQL(lsAuthTokn) + 
                         ", sApprCode = " + SQLUtil.toSQL(lsAppvlCde) + 
                         ", dApproved = " + SQLUtil.toSQL(poGRider.getServerDate()) + 
                         ", cTranStat = '1'" +
-                    " WHERE sTransNox = " + SQLUtil.toSQL((String) loJSON.get("sTransNox"));
+                    " ON DUPLICATE KEY UPDATE" +
+                        "  cApprType = '1'" + 
+                        ", sAuthTokn = " + SQLUtil.toSQL(lsAuthTokn) + 
+                        ", sApprCode = " + SQLUtil.toSQL(lsAppvlCde) + 
+                        ", dApproved = " + SQLUtil.toSQL(poGRider.getServerDate()) + 
+                        ", cTranStat = '1'";
             if (poGRider.executeUpdate(lsSQL) <= 0){
                 psMessage = poGRider.getErrMsg() + "; " + poGRider.getMessage();
                 return false;
