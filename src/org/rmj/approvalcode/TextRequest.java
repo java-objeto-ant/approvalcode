@@ -14,7 +14,7 @@ public class TextRequest {
     public static void main(String [] args){           
         LogWrapper logwrapr = new LogWrapper("SMS.Approval", "sms.log");       
         
-        String lsProdctID = "IntegSys";
+        String lsProdctID = "gRider";
         String lsUserIDxx = "M001111122";
 
         String path;
@@ -68,6 +68,7 @@ public class TextRequest {
                     lsSQL = "UPDATE SMS_Incoming SET cTranStat = '3'" + 
                             " WHERE sTransNox = " + SQLUtil.toSQL(loRS.getString("sTransNox"));
                     
+                    System.out.println(lsSQL);
                     poGRider.executeUpdate(lsSQL);
                 }               
                 
@@ -122,6 +123,7 @@ public class TextRequest {
                     lsSQL = "UPDATE SMS_Incoming SET cTranStat = '3'" + 
                             " WHERE sTransNox = " + SQLUtil.toSQL(loRS.getString("sTransNox"));
                     
+                    System.out.println(lsSQL);
                     poGRider.executeUpdate(lsSQL);
                 }
                 
@@ -139,11 +141,13 @@ public class TextRequest {
                     lsSQL = "UPDATE SMS_Incoming SET cTranStat = '1'" + 
                             " WHERE sTransNox = " + SQLUtil.toSQL(loRS.getString("sTransNox"));
                     
+                    System.out.println(lsSQL);
                     poGRider.executeUpdate(lsSQL);
                 } else {
                     lsSQL = "UPDATE SMS_Incoming SET cTranStat = '3'" + 
                             " WHERE sTransNox = " + SQLUtil.toSQL(loRS.getString("sTransNox"));
                     
+                    System.out.println(lsSQL);
                     poGRider.executeUpdate(lsSQL);
                 }     
             }
@@ -188,6 +192,7 @@ public class TextRequest {
                         ", sModified = " + SQLUtil.toSQL(foGRider.getUserID()) +
                         ", dModified = " + SQLUtil.toSQL(foGRider.getServerDate());
 
+                System.out.println(lsMessage);
                 foGRider.executeUpdate(lsMessage);
             }
     }

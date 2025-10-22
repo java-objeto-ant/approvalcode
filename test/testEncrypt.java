@@ -13,7 +13,8 @@ import org.rmj.appdriver.Tokenize;
  */
 public class testEncrypt {
     public static void main(String [] args){
-        String lsValue = Tokenize.EncryptAuthToken("M00124001410", "09176340516", "2", "4");
+        String lsValue = Tokenize.EncryptAuthToken("M00117001523", "09778571033", "2", "8");
         System.out.println(lsValue);
+        System.out.println(Tokenize.DecryptToken(lsValue, "M00117001523"));
     }
 }

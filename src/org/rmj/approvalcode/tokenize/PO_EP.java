@@ -28,20 +28,9 @@ import org.rmj.appdriver.agentfx.CommonUtils;
 import org.rmj.appdriver.agentfx.WebClient;
 import org.rmj.appdriver.agentfx.service.PO_Master;
 import org.rmj.lib.net.MiscReplUtil;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 public class PO_EP implements iNotification{
     private final String DATABASE = "CASys_DBF";
@@ -166,7 +155,8 @@ public class PO_EP implements iNotification{
                                         "  cSendxxxx = '2'" +
                                         ", dSendDate = " + SQLUtil.toSQL(ldDate) +
                                     " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-                            _instance.executeUpdate(lsSQL);
+                            _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
+                            //_instance.executeUpdate(lsSQL);
                         }
                     }
                 } else { //no notification has been sent
@@ -196,7 +186,8 @@ public class PO_EP implements iNotification{
                                     "  cSendxxxx = " + SQLUtil.toSQL(lnStat) +
                                     ", dSendDate = " + SQLUtil.toSQL(_instance.getServerDate()) +
                                 " WHERE sTransNox = " + SQLUtil.toSQL(_transnox);
-                        _instance.executeUpdate(lsSQL);
+                        //_instance.executeUpdate(lsSQL);
+                        _instance.executeQuery(lsSQL, "Tokenized_Approval_Request", _instance.getBranchCode(), "");
                     }
                 }       
             }
@@ -309,13 +300,13 @@ public class PO_EP implements iNotification{
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true"); //TLS
-        
+               
         Session session = Session.getInstance(prop,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
+            new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
 
         try {            
             Message message = new MimeMessage(session);
@@ -340,13 +331,12 @@ public class PO_EP implements iNotification{
                 message.setText(fsBody);
             
             Transport.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            
+            return true;
+        } catch (MessagingException | IOException e) {
+            System.err.println(e.getMessage());
+           return false;
         }
-        
-        return true;
     }
     
     private boolean sendGMail(){
@@ -486,15 +476,21 @@ public class PO_EP implements iNotification{
                         Process process;
                         
                         if (_singletx){ //called by the PHP API
-                            if(System.getProperty("os.name").toLowerCase().contains("win"))
+                            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                                System.out.println("Windows send mail");
                                 process = Runtime.getRuntime().exec("cmd /c sendmail.bat access mailinfo-" + _transnox, null, new File(System.getProperty("sys.default.path.config")));
-                            else
+                            } else {
+                                System.out.println("Debian send mail");
                                 process = Runtime.getRuntime().exec(System.getProperty("sys.default.path.config") + "/sendmail.sh access mailinfo-" + _transnox);
+                            }
                         }else{ //utility running on a given interval
-                            if(System.getProperty("os.name").toLowerCase().contains("win"))
+                            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                                System.out.println("Windows send mail");
                                 process = Runtime.getRuntime().exec("cmd /c sendmail.bat access mailinfo", null, new File(System.getProperty("sys.default.path.config")));
-                            else
+                            } else{
+                                System.out.println("Debian send mail");
                                 process = Runtime.getRuntime().exec(System.getProperty("sys.default.path.config") + "/sendmail.sh access mailinfo");
+                            }        
                         }
                         
                         StringBuilder output = new StringBuilder();

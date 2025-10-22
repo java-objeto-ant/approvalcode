@@ -3,7 +3,7 @@ package org.rmj.approvalcode.tokenize;
 import org.rmj.appdriver.GRider;
 import org.rmj.replication.utility.LogWrapper;
 
-public class SendNotification {
+public class SendNotificationEP {
     public static void main(String [] args){
         LogWrapper logwrapr = new LogWrapper("SMS.Notification", "sms-token.log");       
 
@@ -18,7 +18,7 @@ public class SendNotification {
         
         System.setProperty("sys.default.path.temp", path + "/temp");
         System.setProperty("sys.default.path.config", path);
-        
+
         String lsProdctID = "gRider";
         String lsUserIDxx = "M001111122";
         
@@ -32,7 +32,7 @@ public class SendNotification {
         
         logwrapr.info("Start of Process.");
         
-        iNotification instance = NotificationFactory.make(poGRider, "PO", "LP");        
+        iNotification instance = NotificationFactory.make(poGRider, "PO", "EP");        
        
         //assign the transaction number if passed
         if (args.length != 0) instance.setTransNox(args[0]);
