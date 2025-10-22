@@ -116,7 +116,7 @@ public class XMCodeApproval {
                             poGRider.Decrypt(poGRider.getEmployeeNo()) : poData.getEntryBy());
         
         //save online only if it is main office.
-        if ("M001»M0W1»GCO1»GCC1»GAP0»GK01".contains(psBranchCd)){
+        if ("M001»M0W1»GCO1»GCC1»GAP0»GK01»VTR1".contains(psBranchCd)){
             reqstdto = poData.getRequestedTo();
             reqstdby = poData.getRequestedBy();
             
@@ -169,12 +169,14 @@ public class XMCodeApproval {
         
         loJSON = saveOnline();
         if ("success".equals((String) loJSON.get("result")) && !lsTransNox.equals("")){
-            lsTransNox = "UPDATE System_Code_Approval SET" +
+            if (!((String) loJSON.get("transno")).substring(0, 4).equals("VTR1")){
+                lsTransNox = "UPDATE System_Code_Approval SET" +
                                 "  sTransNox = " + SQLUtil.toSQL((String) loJSON.get("transno")) +
                             " WHERE sTransNox = " + SQLUtil.toSQL(lsTransNox);
             
-            if (poGRider.executeUpdate(lsTransNox) <= 0)
-                System.err.println(poGRider.getErrMsg() + "; " + poGRider.getMessage());
+                if (poGRider.executeUpdate(lsTransNox) <= 0)
+                    System.err.println(poGRider.getErrMsg() + "; " + poGRider.getMessage());
+            }
         }
         
         return loJSON;        
@@ -393,8 +395,8 @@ public class XMCodeApproval {
         
         String lsSQL = "";
         
-        if (("M001»M0W1»GCO1»GCC1»GAP0»GK01").contains(psBranchCd)){
-            psBranchCd = "GAP0";
+        if (("M001»M0W1»GCO1»GCC1»GAP0»GK01»VTR1").contains(psBranchCd)){
+            psBranchCd = "VTR1";
             poData.setSendStat("1");
         }
         

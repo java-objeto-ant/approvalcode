@@ -331,13 +331,12 @@ public class PO_EP implements iNotification{
                 message.setText(fsBody);
             
             Transport.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            
+            return true;
+        } catch (MessagingException | IOException e) {
+            System.err.println(e.getMessage());
+           return false;
         }
-        
-        return true;
     }
     
     private boolean sendGMail(){
@@ -477,15 +476,21 @@ public class PO_EP implements iNotification{
                         Process process;
                         
                         if (_singletx){ //called by the PHP API
-                            if(System.getProperty("os.name").toLowerCase().contains("win"))
+                            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                                System.out.println("Windows send mail");
                                 process = Runtime.getRuntime().exec("cmd /c sendmail.bat access mailinfo-" + _transnox, null, new File(System.getProperty("sys.default.path.config")));
-                            else
+                            } else {
+                                System.out.println("Debian send mail");
                                 process = Runtime.getRuntime().exec(System.getProperty("sys.default.path.config") + "/sendmail.sh access mailinfo-" + _transnox);
+                            }
                         }else{ //utility running on a given interval
-                            if(System.getProperty("os.name").toLowerCase().contains("win"))
+                            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                                System.out.println("Windows send mail");
                                 process = Runtime.getRuntime().exec("cmd /c sendmail.bat access mailinfo", null, new File(System.getProperty("sys.default.path.config")));
-                            else
+                            } else{
+                                System.out.println("Debian send mail");
                                 process = Runtime.getRuntime().exec(System.getProperty("sys.default.path.config") + "/sendmail.sh access mailinfo");
+                            }        
                         }
                         
                         StringBuilder output = new StringBuilder();
