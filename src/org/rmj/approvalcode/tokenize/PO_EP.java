@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,17 +18,15 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.rmj.appdriver.GRider;
 import org.rmj.appdriver.MiscUtil;
 import org.rmj.appdriver.SQLUtil;
 import org.rmj.appdriver.agentfx.CommonUtils;
-import org.rmj.appdriver.agentfx.WebClient;
 import org.rmj.appdriver.agentfx.service.PO_Master;
 import org.rmj.lib.net.MiscReplUtil;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class PO_EP implements iNotification{
@@ -210,84 +207,102 @@ public class PO_EP implements iNotification{
     }
     
     private boolean sendSMS(String fsMobileNo, String fsMessagex, String fsSourceNo){
-        System.out.println("Sending SMS to " + fsMobileNo);
+        ArrayList<String> laRecipient = new ArrayList();
+        laRecipient.add(fsMobileNo);
         
-        String fsURL = "https://restgk.guanzongroup.com.ph/system/masking/sendSMS.php";
+        MaskSMS processor = new MaskSMS(_instance, null);
+        processor.setMaskName("GUANZON");
+        processor.setSMS(fsMessagex);
+        processor.setRecipient(laRecipient);
+        processor.setSourceNo(fsSourceNo);
         
-        String clientid = _instance.getClientID(); //this must be replaced based on the client id using it
-        String productid = _instance.getProductID(); //this must be replaced based on the product id using it
-        String imei = "GMC_SEG09"; //this must be replaced based on the computer name using it
-        String userid = _instance.getUserID(); //this must be replaced based on the user id using it
-        
-        Calendar calendar = Calendar.getInstance();
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("Accept", "application/json");
-        headers.put("Content-Type", "application/json");
-        headers.put("g-api-id", productid);
-        headers.put("g-api-imei", imei);
-        
-        headers.put("g-api-key", SQLUtil.dateFormat(calendar.getTime(), "yyyyMMddHHmmss"));        
-        headers.put("g-api-hash", org.apache.commons.codec.digest.DigestUtils.md5Hex((String)headers.get("g-api-imei") + (String)headers.get("g-api-key")));
-        headers.put("g-api-client", clientid);    
-        headers.put("g-api-user", userid);    
-        headers.put("g-api-log", "");    
-        headers.put("g-api-token", "");    
-        headers.put("g-api-mobile", "");    
-        
-        JSONObject param = new JSONObject();
-        param.put("message", fsMessagex);
-        param.put("mobileno", fsMobileNo);
-        param.put("maskname", MASKNAME);
-        
-        String response;
-        boolean sent;
-        try {
-            response = WebClient.sendHTTP(fsURL, param.toJSONString(), (HashMap<String, String>) headers);
-            if(response == null){
-                System.out.println("No Response");
-                sent = false;
-            } 
-
-            JSONParser loParser = new JSONParser();
-            JSONObject loJSON = (JSONObject) loParser.parse(response);
-            
-            if (loJSON.get("result").equals("success")){
-                System.out.println((String) loJSON.get("message") + "(" + (String) loJSON.get("maskname") + " - " + (String) loJSON.get("id") + ")");
-                sent = true;
-            } else {
-                loJSON = (JSONObject) loJSON.get("error");
-                System.err.println(String.valueOf(loJSON.get("code")) + " - " + (String) loJSON.get("message"));
-                sent = false;
-            }
-        } catch (IOException | ParseException ex) {
-            ex.printStackTrace();
-            sent = false;
+        if (!processor.sendMessage()){
+            System.err.println(processor.getMessage());
+            return false;
         }
-                
-        String lsSQL = MiscUtil.getNextCode("HotLine_Outgoing", "sTransNox", true, _instance.getConnection(), "MX01");
-
-        lsSQL = "INSERT INTO HotLine_Outgoing SET" +
-                "  sTransNox = " + SQLUtil.toSQL(lsSQL) +
-                ", dTransact = " + SQLUtil.toSQL(_instance.getServerDate()) +
-                ", sDivision = 'MIS'" +
-                ", sMobileNo = " + SQLUtil.toSQL(fsMobileNo) +
-                ", sMessagex = " + SQLUtil.toSQL(fsMessagex) +
-                ", cSubscrbr = " + SQLUtil.toSQL(CommonUtils.classifyNetwork(fsMobileNo)) +
-                ", dDueUntil = " + SQLUtil.toSQL(_instance.getServerDate()) +
-                ", cSendStat = '2'" +
-                ", nNoRetryx = '1'" +
-                ", sUDHeader = ''" +
-                ", sReferNox = " + SQLUtil.toSQL(fsSourceNo) +
-                ", sSourceCd = " + SQLUtil.toSQL("APTK") +
-                ", cTranStat = " + SQLUtil.toSQL(sent ? "1" : "0") +
-                ", nPriority = 1" +
-                ", sModified = " + SQLUtil.toSQL(_instance.getUserID()) +
-                ", dModified = " + SQLUtil.toSQL(_instance.getServerDate());
-
-        _instance.executeUpdate(lsSQL);
         
-        return sent;
+        return true;
     }
+    
+//    private boolean sendSMS(String fsMobileNo, String fsMessagex, String fsSourceNo){
+//        System.out.println("Sending SMS to " + fsMobileNo);
+//        
+//        String fsURL = "https://restgk.guanzongroup.com.ph/system/masking/sendSMS.php";
+//        
+//        String clientid = _instance.getClientID(); //this must be replaced based on the client id using it
+//        String productid = _instance.getProductID(); //this must be replaced based on the product id using it
+//        String imei = "GMC_SEG09"; //this must be replaced based on the computer name using it
+//        String userid = _instance.getUserID(); //this must be replaced based on the user id using it
+//        
+//        Calendar calendar = Calendar.getInstance();
+//        Map<String, String> headers = new HashMap<String, String>();
+//        headers.put("Accept", "application/json");
+//        headers.put("Content-Type", "application/json");
+//        headers.put("g-api-id", productid);
+//        headers.put("g-api-imei", imei);
+//        
+//        headers.put("g-api-key", SQLUtil.dateFormat(calendar.getTime(), "yyyyMMddHHmmss"));        
+//        headers.put("g-api-hash", org.apache.commons.codec.digest.DigestUtils.md5Hex((String)headers.get("g-api-imei") + (String)headers.get("g-api-key")));
+//        headers.put("g-api-client", clientid);    
+//        headers.put("g-api-user", userid);    
+//        headers.put("g-api-log", "");    
+//        headers.put("g-api-token", "");    
+//        headers.put("g-api-mobile", "");    
+//        
+//        JSONObject param = new JSONObject();
+//        param.put("message", fsMessagex);
+//        param.put("mobileno", fsMobileNo);
+//        param.put("maskname", MASKNAME);
+//        
+//        String response;
+//        boolean sent;
+//        try {
+//            response = WebClient.sendHTTP(fsURL, param.toJSONString(), (HashMap<String, String>) headers);
+//            if(response == null){
+//                System.out.println("No Response");
+//                sent = false;
+//            } 
+//
+//            JSONParser loParser = new JSONParser();
+//            JSONObject loJSON = (JSONObject) loParser.parse(response);
+//            
+//            if (loJSON.get("result").equals("success")){
+//                System.out.println((String) loJSON.get("message") + "(" + (String) loJSON.get("maskname") + " - " + (String) loJSON.get("id") + ")");
+//                sent = true;
+//            } else {
+//                loJSON = (JSONObject) loJSON.get("error");
+//                System.err.println(String.valueOf(loJSON.get("code")) + " - " + (String) loJSON.get("message"));
+//                sent = false;
+//            }
+//        } catch (IOException | ParseException ex) {
+//            ex.printStackTrace();
+//            sent = false;
+//        }
+//                
+//        String lsSQL = MiscUtil.getNextCode("HotLine_Outgoing", "sTransNox", true, _instance.getConnection(), "MX01");
+//
+//        lsSQL = "INSERT INTO HotLine_Outgoing SET" +
+//                "  sTransNox = " + SQLUtil.toSQL(lsSQL) +
+//                ", dTransact = " + SQLUtil.toSQL(_instance.getServerDate()) +
+//                ", sDivision = 'MIS'" +
+//                ", sMobileNo = " + SQLUtil.toSQL(fsMobileNo) +
+//                ", sMessagex = " + SQLUtil.toSQL(fsMessagex) +
+//                ", cSubscrbr = " + SQLUtil.toSQL(CommonUtils.classifyNetwork(fsMobileNo)) +
+//                ", dDueUntil = " + SQLUtil.toSQL(_instance.getServerDate()) +
+//                ", cSendStat = '2'" +
+//                ", nNoRetryx = '1'" +
+//                ", sUDHeader = ''" +
+//                ", sReferNox = " + SQLUtil.toSQL(fsSourceNo) +
+//                ", sSourceCd = " + SQLUtil.toSQL("APTK") +
+//                ", cTranStat = " + SQLUtil.toSQL(sent ? "1" : "0") +
+//                ", nPriority = 1" +
+//                ", sModified = " + SQLUtil.toSQL(_instance.getUserID()) +
+//                ", dModified = " + SQLUtil.toSQL(_instance.getServerDate());
+//
+//        _instance.executeUpdate(lsSQL);
+//        
+//        return sent;
+//    }
     
     private boolean sendgmail(String fsRcvr, String fsCopy, String fsSubj, String fsBody, String fsFile){
         final String username = "mis.guanzon1945@gmail.com";
