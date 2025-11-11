@@ -30,6 +30,15 @@
         <group name="Los Pedritos"/>
         <group name="Engineering"/>
         <group name="GCARD"/>
-        <group name="Pedritos"/>
+        <group name="Pedritos">
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/test/testDecrypt.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/sms/SMSApprovalFactory.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/sms/iApproval.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/test/testDecrypt64.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/PO_LP.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/sms/SMSProcessor.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/sms/APP_RQST.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/approvalcode/src/org/rmj/approvalcode/tokenize/PO_EP.java</file>
+        </group>
     </open-files>
 </project-private>

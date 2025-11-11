@@ -87,11 +87,15 @@ public class PO_LP implements iNotification{
                 ", a.cSendxxxx" +
                 ", a.sReqstdBy" +
             " FROM GGC_ISysDBF.Tokenized_Approval_Request a" +
-            " WHERE a.sSourceCd = " + SQLUtil.toSQL(SOURCECD) +
+                ", CASys_DBF_LP.PO_Master b" +
+            " WHERE a.sSourceNo = b.sTransNox" +
+                " AND a.sSourceCd = " + SQLUtil.toSQL(SOURCECD) +
                 " AND a.sRqstType = " + SQLUtil.toSQL(RQSTTYPE) +
+                " AND b.cTranStat = 0" +
                 " AND a.cApprType = '1'" + //requested approval type is tokenized
                 " AND a.cTranStat = '0'" + //not approved request
                 " AND a.cSendxxxx < '2'"; //not yet sent notification
+        
 
         //user is sending an specific PO request
         if (!_transnox.equals("")) {
